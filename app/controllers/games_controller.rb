@@ -6,7 +6,11 @@ class GamesController < ApplicationController
 
     def show
         game = Game.find_by(id: params[:id])
-        render json: game
+        if(game)
+            render json: game, status: :ok
+        else
+            render json: {error: "Game Not Found"}, status: :not_found
+        end
     end
 
     def create
@@ -16,13 +20,31 @@ class GamesController < ApplicationController
 
     def update
         game = Game.find_by(id: params[:id])
-        game.update(params.permit(:title, :release_year))
-        render json: game
+        if(game)
+            game.update(params.permit(:title, :release_year))
+            render json: game, status: :ok
+        else
+            render json: { error: "Game Not Found" }, status: :not_found
+        end
     end
 
     def destroy
         game = Game.find_by(id: params[:id])
-        game.destroy
-        render json: {}
+        if(game)
+            game.destroy
+            render json: {}
+        else
+            render json: { error: "Game Not Found" }, status: :not_found
+        end
+    end
+
+    def last_game
+        last_game = Game.all.last
+        
+        if(last_game == nil)
+            render json: { error: "There are no games." }
+        else
+            render json: last_game
+        end
     end
 end
