@@ -1,13 +1,13 @@
 class GamesController < ApplicationController
     def index
         games = Game.all
-        render json: games, except: [:created_at, :updated_at], status: :ok
+        render json: games, status: :ok
     end
 
     def show
         game = Game.find_by(id: params[:id])
         if(game != nil)
-            render json: game, include: [:reviews, :users], status: :ok
+            render json: game, status: :ok
         else
             render json: { error: "Game Not Found" }, status: :not_found
         end
@@ -32,7 +32,7 @@ class GamesController < ApplicationController
                 render json: { errors: game.errors.full_messages}, status: :unprocessable_entity
             end
         else
-            render json: { error: "Game Not Found" }
+            render json: { error: "Game Not Found" }, status: :not_found
         end
     end
 
@@ -49,9 +49,9 @@ class GamesController < ApplicationController
     def last_game
         last_game = Game.all.last
         if(Game.all.length > 0)
-            render json: last_game
+            render json: last_game, status: :ok
         else
-            render json: { error: "Sorry, there are no games" }
+            render json: { error: "Sorry, there are no games" }, status: :not_found
         end
     end
 end
