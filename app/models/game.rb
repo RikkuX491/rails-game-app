@@ -1,5 +1,5 @@
 class Game < ApplicationRecord
-    has_many :reviews
+    has_many :reviews, dependent: :destroy
     has_many :users, through: :reviews
 
     # Validations deliverables - Add validations to this model such that...
@@ -9,5 +9,6 @@ class Game < ApplicationRecord
     # 4) All games have a release_year (cannot be empty / blank)
     # 5) The release_year is between 1900 and 2023
 
-    
+    validates :title, presence: true, uniqueness: true, length: { minimum: 4 }
+    validates :release_year, presence: true, inclusion: 1900..2023
 end

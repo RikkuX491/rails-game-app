@@ -15,14 +15,22 @@ class GamesController < ApplicationController
 
     def create
         new_game = Game.create(title: params[:title], release_year: params[:release_year])
-        render json: new_game, status: :created
+        if(new_game.valid?)
+            render json: new_game, status: :created
+        else
+            render json: {errors: new_game.errors.full_messages}, status: :unprocessable_entity
+        end
     end
 
     def update
         game = Game.find_by(id: params[:id])
         if(game != nil)
-            game.update(params.permit(:title, :release_year))
-            render json: game, status: :ok
+            if(new_game.valid?)
+                game.update(params.permit(:title, :release_year))
+                render json: game, status: :ok
+            else
+                render json: { errors: game.errors.full_messages}, status: :unprocessable_entity
+            end
         else
             render json: { error: "Game Not Found" }
         end
