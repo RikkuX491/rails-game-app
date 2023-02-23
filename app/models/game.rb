@@ -6,7 +6,8 @@ class Game < ApplicationRecord
     # 1) All games have a title (cannot be empty / blank)
     # 2) No two games have the same title
     # 3) The game title is at least 4 characters long
-    # 4) The release_year is between 1900 and 2023
+    # 4) All games have a release_year (cannot be empty / blank)
+    # 5) The release_year is between 1900 and 2023
 
     
 end
