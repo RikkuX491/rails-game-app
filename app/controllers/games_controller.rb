@@ -1,9 +1,16 @@
 class GamesController < ApplicationController
+
+    # Action for GET request to get all games '/games'
     def index
+        # Retrieve all of the games from the database with Game.all and store it in a variable.
         games = Game.all
+
+        # Render the data for the games, and return an HTTP status code of :ok (202).
+        # :ok (202) is the standard response for successful HTTP requests.
         render json: games, status: :ok
     end
 
+    # Action for GET request to get one game '/games/:id'
     def show
         game = Game.find_by(id: params[:id])
         if(game != nil)
@@ -13,6 +20,7 @@ class GamesController < ApplicationController
         end
     end
 
+    # Action for POST request to create a new game '/games'
     def create
         new_game = Game.create(title: params[:title], release_year: params[:release_year])
         if(new_game.valid?)
@@ -22,6 +30,7 @@ class GamesController < ApplicationController
         end
     end
 
+    # Action for PATCH request to update a game '/games/:id'
     def update
         game = Game.find_by(id: params[:id])
         if(game != nil)
@@ -36,6 +45,7 @@ class GamesController < ApplicationController
         end
     end
 
+    # Action for DELETE request to destroy a game '/games/:id'
     def destroy
         game = Game.find_by(id: params[:id])
         if(game != nil)
@@ -46,6 +56,7 @@ class GamesController < ApplicationController
         end
     end
 
+    # This is a custom action that will render the last game from the database '/get_last_game'
     def last_game
         last_game = Game.all.last
         if(Game.all.length > 0)
