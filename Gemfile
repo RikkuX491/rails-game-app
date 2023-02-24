@@ -28,6 +28,8 @@ group :development do
   # gem "spring"
 end
 
+# Allows you to use Rack::Cors
 gem 'rack-cors', :require => 'rack/cors'
 
+# Allows you to use serializers
 gem 'active_model_serializers'
