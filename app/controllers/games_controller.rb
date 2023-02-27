@@ -14,7 +14,7 @@ class GamesController < ApplicationController
     def show
         game = Game.find_by(id: params[:id])
         if(game != nil)
-            render json: game, status: :ok
+            render json: game, status: :ok, serializer: GameShowSerializer
         else
             render json: { error: "Game Not Found" }, status: :not_found
         end
