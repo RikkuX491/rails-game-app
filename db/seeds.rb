@@ -9,9 +9,9 @@
 Game.create(title: "Pokemon", release_year: 1998)
 Game.create(title: "Undertale", release_year: 2015)
 
-User.create(name: "Alice")
-User.create(name: "Bob")
-User.create(name: "Chris")
+User.create(username: "alice")
+User.create(username: "bob")
+User.create(username: "chris")
 
 4.times do
     Review.create(game_id: Game.all.sample.id, user_id: User.all.sample.id, rating: [1, 2, 3, 4, 5].sample)
