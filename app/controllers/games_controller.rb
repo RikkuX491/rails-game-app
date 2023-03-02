@@ -1,4 +1,5 @@
 class GamesController < ApplicationController
+    before_action :authorize
 
     # Action for GET request to get all games '/games'
     def index
@@ -34,7 +35,7 @@ class GamesController < ApplicationController
     def update
         game = Game.find_by(id: params[:id])
         if(game != nil)
-            if(new_game.valid?)
+            if(game.valid?)
                 game.update(params.permit(:title, :release_year))
                 render json: game, status: :ok
             else
@@ -64,5 +65,9 @@ class GamesController < ApplicationController
         else
             render json: { error: "Sorry, there are no games" }, status: :not_found
         end
+    end
+
+    def authorize
+        return render json: { error: "Not authorized" }, status: :unauthorized unless session.include? :user_id
     end
 end
