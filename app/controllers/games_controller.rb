@@ -1,5 +1,6 @@
 class GamesController < ApplicationController
     before_action :authorize
+    skip_before_action :authorize, only: [:index]
 
     # Action for GET request to get all games '/games'
     def index
