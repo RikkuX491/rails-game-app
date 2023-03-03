@@ -33,3 +33,6 @@ gem 'rack-cors', :require => 'rack/cors'
 
 # Allows you to use serializers
 gem 'active_model_serializers'
+
+# Allows you to keep your users' passwords secure
+gem 'bcrypt'
