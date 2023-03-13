@@ -1,8 +1,12 @@
 class GamesController < ApplicationController
+
+    # The code inside of the authorize method will run before any controller action.
     before_action :authorize
+
+    # before_action will not call the authorize method before the index action.
     skip_before_action :authorize, only: [:index]
 
-    # Action for GET request to get all games '/games'
+    # Action to handle GET request to get all games '/games'.
     def index
         # Retrieve all of the games from the database with Game.all and store it in a variable.
         games = Game.all
@@ -12,7 +16,7 @@ class GamesController < ApplicationController
         render json: games, status: :ok
     end
 
-    # Action for GET request to get one game '/games/:id'
+    # Action to handle GET request to get one game '/games/:id'
     def show
         game = Game.find_by(id: params[:id])
         if(game != nil)
@@ -22,7 +26,7 @@ class GamesController < ApplicationController
         end
     end
 
-    # Action for POST request to create a new game '/games'
+    # Action to handle POST request to create a new game '/games'
     def create
         new_game = Game.create(title: params[:title], release_year: params[:release_year])
         if(new_game.valid?)
@@ -32,7 +36,7 @@ class GamesController < ApplicationController
         end
     end
 
-    # Action for PATCH request to update a game '/games/:id'
+    # Action to handle PATCH request to update a game '/games/:id'
     def update
         game = Game.find_by(id: params[:id])
         if(game != nil)
@@ -47,7 +51,7 @@ class GamesController < ApplicationController
         end
     end
 
-    # Action for DELETE request to destroy a game '/games/:id'
+    # Action to handle DELETE request to destroy a game '/games/:id'
     def destroy
         game = Game.find_by(id: params[:id])
         if(game != nil)
@@ -68,7 +72,10 @@ class GamesController < ApplicationController
         end
     end
 
+    # The code inside of this method will run before any controller action.
     def authorize
+
+        # If the user is not logged in, the Not Authorized error message will be rendered.
         return render json: { error: "Not authorized" }, status: :unauthorized unless session.include? :user_id
     end
 end
