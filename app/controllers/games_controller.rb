@@ -18,20 +18,33 @@ class GamesController < ApplicationController
 
     # Action to handle GET request to get one game '/games/:id'
     def show
+        # Search for the Game by its id and store the Game instance inside of a variable.
         game = Game.find_by(id: params[:id])
+        # If the game is found...
         if(game != nil)
+            # Render the information for the game using the GameShowSerializer.
+            # An HTTP status code of :ok (202) will be returned.
             render json: game, status: :ok, serializer: GameShowSerializer
+        # Else, the game is not found...
         else
+            # Render an object containing a key of error and value with an error message - "Game Not Found".
+            # An HTTP status code of :not_found (404) will be returned.
             render json: { error: "Game Not Found" }, status: :not_found
         end
     end
 
     # Action to handle POST request to create a new game '/games'
     def create
+        # Attempt to create a new Game instance.
         new_game = Game.create(title: params[:title], release_year: params[:release_year])
+        # If the new game is valid (passes validations)...
         if(new_game.valid?)
+            # Render the information for the newly created game instance, and return an HTTP status code of :created (201).
+            # :created (201) indicates that the request has been fulfilled and resulted in a new resource being created.
             render json: new_game, status: :created
+        # The new game is not valid (fails validation)...
         else
+            # Render an object containing a key of errors and value with the new game's error messages
             render json: {errors: new_game.errors.full_messages}, status: :unprocessable_entity
         end
     end
@@ -74,7 +87,6 @@ class GamesController < ApplicationController
 
     # The code inside of this method will run before any controller action.
     def authorize
-
         # If the user is not logged in, the Not Authorized error message will be rendered.
         return render json: { error: "Not authorized" }, status: :unauthorized unless session.include? :user_id
     end
