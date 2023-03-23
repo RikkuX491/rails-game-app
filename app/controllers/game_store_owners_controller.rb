@@ -1,0 +1,2 @@
+class GameStoreOwnersController < ApplicationController
+end

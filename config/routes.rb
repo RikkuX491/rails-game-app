@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :game_store_owners
   resources :reviews
   #resources :users
   

@@ -6,8 +6,10 @@
 #   movies = Movie.create([{ name: "Star Wars" }, { name: "Lord of the Rings" }])
 #   Character.create(name: "Luke", movie: movies.first)
 
-Game.create(title: "Pokemon", release_year: 1998)
-Game.create(title: "Undertale", release_year: 2015)
+GameStoreOwner.create(name: "Jordan")
+
+Game.create(title: "Pokemon", release_year: 1998, game_store_owner_id: 1)
+Game.create(title: "Undertale", release_year: 2015, game_store_owner_id: 1)
 
 User.create(username: "alice", password: "batterypark123")
 User.create(username: "bob", password: "rubyonrails4")

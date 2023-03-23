@@ -4,7 +4,7 @@ class GamesController < ApplicationController
     before_action :authorize
 
     # before_action will not call the authorize method before the index action.
-    skip_before_action :authorize, only: [:index, :destroy]
+    skip_before_action :authorize, only: [:index]
 
     # Action to handle GET request to get all games '/games'.
     def index
